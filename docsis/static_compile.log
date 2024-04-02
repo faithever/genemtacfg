@@ -1,0 +1,90 @@
+make  all-recursive
+make[1]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis'
+Making all in src
+make[2]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis/src'
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis.o -MD -MP -MF .deps/docsis.Tpo -c -o docsis.o docsis.c
+In file included from /usr/include/string.h:495,
+                 from docsis.c:29:
+In function ‘strncpy’,
+    inlined from ‘get_output_name’ at docsis.c:733:3:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:106:10: warning: ‘__builtin_strncpy’ specified bound depends on the length of the source argument [-Wstringop-overflow=]
+  106 |   return __builtin___strncpy_chk (__dest, __src, __len, __bos (__dest));
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docsis.c: In function ‘get_output_name’:
+docsis.c:733:3: note: length computed here
+  733 |   strncpy (&new_path[pathlen - old_ext_len], extension_string, strlen(extension_string) );
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mv -f .deps/docsis.Tpo .deps/docsis.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT ethermac.o -MD -MP -MF .deps/ethermac.Tpo -c -o ethermac.o ethermac.c
+mv -f .deps/ethermac.Tpo .deps/ethermac.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT md5.o -MD -MP -MF .deps/md5.Tpo -c -o md5.o md5.c
+mv -f .deps/md5.Tpo .deps/md5.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis_encode.o -MD -MP -MF .deps/docsis_encode.Tpo -c -o docsis_encode.o docsis_encode.c
+mv -f .deps/docsis_encode.Tpo .deps/docsis_encode.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis_decode.o -MD -MP -MF .deps/docsis_decode.Tpo -c -o docsis_decode.o docsis_decode.c
+mv -f .deps/docsis_decode.Tpo .deps/docsis_decode.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis_snmp.o -MD -MP -MF .deps/docsis_snmp.Tpo -c -o docsis_snmp.o docsis_snmp.c
+In file included from /usr/include/string.h:495,
+                 from /usr/include/x86_64-linux-gnu/sys/un.h:37,
+                 from /usr/local/include/net-snmp/library/snmpUnixDomain.h:14,
+                 from /usr/local/include/net-snmp/session_api.h:306,
+                 from /usr/local/include/net-snmp/library/snmp_client.h:33,
+                 from /usr/local/include/net-snmp/varbind_api.h:102,
+                 from /usr/local/include/net-snmp/library/snmp_api.h:33,
+                 from /usr/local/include/net-snmp/definitions.h:23,
+                 from /usr/local/include/net-snmp/types.h:462,
+                 from /usr/local/include/net-snmp/utilities.h:16,
+                 from docsis_snmp.h:29,
+                 from docsis_snmp.c:24:
+In function ‘strncpy’,
+    inlined from ‘encode_vbind’ at docsis_snmp.c:253:2:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:106:10: warning: ‘__builtin_strncpy’ specified bound 2560 equals destination size [-Wstringop-truncation]
+  106 |   return __builtin___strncpy_chk (__dest, __src, __len, __bos (__dest));
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘strncpy’,
+    inlined from ‘encode_vbind’ at docsis_snmp.c:174:4:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:106:10: warning: ‘__builtin_strncpy’ specified bound 2560 equals destination size [-Wstringop-truncation]
+  106 |   return __builtin___strncpy_chk (__dest, __src, __len, __bos (__dest));
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mv -f .deps/docsis_snmp.Tpo .deps/docsis_snmp.Po
+/bin/bash ../ylwrap docsis_yy.y y.tab.c docsis_yy.c y.tab.h `echo docsis_yy.c | sed -e s/cc$/hh/ -e s/cpp$/hpp/ -e s/cxx$/hxx/ -e s/c++$/h++/ -e s/c$/h/` y.output docsis_yy.output -- /usr/bin/bison -t -d -y  
+updating docsis_yy.h
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis_yy.o -MD -MP -MF .deps/docsis_yy.Tpo -c -o docsis_yy.o docsis_yy.c
+docsis_yy.y:31:5: warning: "YYTEXT_POINTER" is not defined, evaluates to 0 [-Wundef]
+   31 | #if YYTEXT_POINTER
+      |     ^~~~~~~~~~~~~~
+mv -f .deps/docsis_yy.Tpo .deps/docsis_yy.Po
+/bin/bash ../ylwrap docsis_lex.l lex.yy.c docsis_lex.c -- flex  
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT docsis_lex.o -MD -MP -MF .deps/docsis_lex.Tpo -c -o docsis_lex.o docsis_lex.c
+docsis_lex.l: In function ‘yyread’:
+docsis_lex.l:204:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+docsis_lex.l: In function ‘yyrestart’:
+docsis_lex.l:614:17: warning: unused variable ‘new_state_buf’ [-Wunused-variable]
+docsis_lex.l:613:10: warning: unused variable ‘new_size’ [-Wunused-variable]
+docsis_lex.l: In function ‘yy_switch_to_buffer’:
+docsis_lex.l:642:17: warning: unused variable ‘new_state_buf’ [-Wunused-variable]
+docsis_lex.l:641:10: warning: unused variable ‘new_size’ [-Wunused-variable]
+mv -f .deps/docsis_lex.Tpo .deps/docsis_lex.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT hmac_md5.o -MD -MP -MF .deps/hmac_md5.Tpo -c -o hmac_md5.o hmac_md5.c
+mv -f .deps/hmac_md5.Tpo .deps/hmac_md5.Po
+gcc -static  -DHAVE_CONFIG_H -I. -I..   -g -O2 -DNETSNMP_ENABLE_IPV6 -fno-strict-aliasing -DNETSNMP_REMOVE_U64 -g -O2 -Ulinux -Dlinux=linux -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I/usr/lib/x86_64-linux-gnu/perl/5.30/CORE -I. -I/usr/local/include   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -MT sha1.o -MD -MP -MF .deps/sha1.Tpo -c -o sha1.o sha1.c
+mv -f .deps/sha1.Tpo .deps/sha1.Po
+/bin/bash ../libtool  --tag=CC   --mode=link gcc -static   -Wall  -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2   -o docsis docsis.o ethermac.o md5.o docsis_encode.o docsis_decode.o docsis_snmp.o docsis_yy.o docsis_lex.o hmac_md5.o sha1.o  -L/usr/local/lib -lnetsnmp -lcrypto -lm  -lm -lresolv 
+libtool: link: gcc -Wall -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wendif-labels -Werror-implicit-function-declaration -Wextra -Wno-unused-parameter -Wfloat-equal -Wformat-security -Werror=format-security -Winit-self -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes -Wpointer-arith -Wundef -g -g -O2 -o docsis docsis.o ethermac.o md5.o docsis_encode.o docsis_decode.o docsis_snmp.o docsis_yy.o docsis_lex.o hmac_md5.o sha1.o  -L/usr/local/lib /usr/local/lib/libnetsnmp.so -lcrypto -lm -lresolv
+make[2]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis/src'
+Making all in doc
+make[2]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis/doc'
+/bin/sh -e ./generate-settings.sh \
+	config-settings.html 0.9.9-dev
+make[2]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis/doc'
+Making all in examples
+make[2]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis/examples'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis/examples'
+Making all in mibs
+make[2]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis/mibs'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis/mibs'
+make[2]: Entering directory '/home/owen/Prj/Tools/docsis_git/docsis'
+make[2]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis'
+make[1]: Leaving directory '/home/owen/Prj/Tools/docsis_git/docsis'
