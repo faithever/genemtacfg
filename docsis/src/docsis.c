@@ -263,7 +263,7 @@ static void usage () __attribute__((__noreturn__));
 static void
 usage ()
 {
-  fprintf(stderr, "DOCSIS Configuration File creator, version %s\n", VERSION);
+  fprintf(stderr, "DOCSIS Configuration File creator, version %s and IETF added\n", VERSION);
   fprintf(stderr, "Copyright (c) 1999,2000,2001 Cornel Ciocirlan, ctrl@users.sourceforge.net\n");
   fprintf(stderr, "Copyright (c) 2002,2003,2004,2005 Evvolve Media SRL, docsis@evvolve.com\n");
   fprintf(stderr, "Copyright (c) 2014 - 2015 Adrian Simionov, daniel.simionov@gmail.com\n\n");
@@ -289,8 +289,8 @@ usage ()
 	"	-M \"PATH1:PATH2\"\n"
 	"		Specify the SNMP MIB directory when encoding or decoding configuration\n"
 	"		files.\n\n"
-	"	-na | -eu\n"
-	"		Adds CableLabs PacketCable or Excentis EuroPacketCable SHA1 hash\n"
+	"	-na | -eu | -ietf\n"
+	"		Adds CableLabs PacketCable, Excentis EuroPacketCable or IETF SHA1 hash\n"
 	"		when encoding an MTA config file.\n\n"
 	"	-dialplan\n"
 	"		Adds a PC20 dialplan from an external file called \"dialplan.txt\" in\n"
