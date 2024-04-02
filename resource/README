@@ -1,0 +1,15 @@
+
+#Requirement
+GLIBC version should be over 2.28
+
+#LOCATION info
+
+#snmplib.tgz
+/usr/local/share
+
+
+#libnetsnmp.so.35
+/usr/lib/libnetsnmp.so.35 -> /usr/local/lib/libnetsnmp.so.35.0.0
+
+
+
