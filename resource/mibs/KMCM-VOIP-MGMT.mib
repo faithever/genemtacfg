@@ -1,0 +1,188 @@
+-- *************************************************************************
+-- KMCM-MEGACABLE-CABLEMODEM-MGMT :  Kaonmedia Corporation
+--
+-- Copyright (c) 2016 by Kaonmedia Corporation
+-- All rights reserved.
+-- 
+--**************************************************************************
+--    Filename: kmcm-megacable-cablemodem-mgmt.mib
+--    Author:   Jaekyun Lee
+--    Creation Date: February 18, 2016
+--
+--**************************************************************************
+--    Description:
+--
+--		SMI MIB for cableData branch of Kaonmedia private MIBs
+--		
+--**************************************************************************
+--    Revision History:
+--		
+--**************************************************************************
+
+KMCM-VOIP-MGMT DEFINITIONS ::= BEGIN
+IMPORTS
+        MODULE-IDENTITY, 
+        OBJECT-TYPE,enterprises, 
+        Integer32
+                FROM SNMPv2-SMI;
+                
+                
+kaonmedia           OBJECT IDENTIFIER ::= { enterprises 27069 }
+kaonmediaProducts   OBJECT IDENTIFIER ::= { kaonmedia 1 }
+kmEMTA              OBJECT IDENTIFIER ::= { kaonmediaProducts 3 }
+
+kmVoIPMgmt MODULE-IDENTITY
+    LAST-UPDATED "201602180000Z"
+    ORGANIZATION "Kaonmedia Co., Ltd."
+    CONTACT-INFO
+        "  R&D Institute/R&D Group
+            Kaonmedia Building, 513-4, Yatap-Dong, 
+            Bundang-Gu, Sungnam-City, Kyonggi-Do, Korea
+		
+	     		Tel : +82 31 724 8500 
+	     		Fax : +82 31 724 8000  "
+
+    DESCRIPTION
+        "The Structure of Management Information for the Kaonmedia enterprise."
+    REVISION      "201602180000Z"
+    DESCRIPTION
+        "The initial version of this MIB module"
+        
+        ::= { kmEMTA 2 }
+
+kmCableNetNA        OBJECT IDENTIFIER ::= { kmVoIPMgmt 1 }
+kmPktcNA15            OBJECT IDENTIFIER ::= { kmCableNetNA 1 }
+kmUserConfig        OBJECT IDENTIFIER ::= { kmPktcNA15 1 }
+
+
+KaonUserConfigTable  OBJECT-TYPE  
+    SYNTAX        SEQUENCE OF KaonUserConfigEntry  
+    MAX-ACCESS    not-accessible  
+    STATUS        current  
+    DESCRIPTION     
+        " This table describes the information pertaining to each 
+          endpoint of the MTA. All entries in this table represent 
+          the provisioned endpoints provisioned with the information 
+          required by the MTA to maintain the NCS signaling protocol 
+          communication with the CMS. Each endpoint can be assigned 
+          to its own CMS. If the specific endpoint does not have 
+          the corresponding CMS information in this table, the 
+          endpoint is considered as not provisioned with voice 
+          services. Objects in this table do not persist across 
+          MTA reboots." 
+   ::=  { kmUserConfig 1 }  
+ 
+KaonUserConfigEntry  OBJECT-TYPE  
+    SYNTAX        KaonUserConfigEntry  
+
+
+    MAX-ACCESS    not-accessible  
+    STATUS        current  
+    DESCRIPTION     
+        "Each entry in the KaonUserConfigTable represents  
+         required signaling parameters for the specific endpoint 
+         provisioned with voice services." 
+    INDEX { ifIndex }  
+    ::= { KaonUserConfigTable 1 }  
+ 
+KaonUserConfigEntry  ::= SEQUENCE {  
+    KaonUserConfigMinHookFlash            Unsigned32,  
+    KaonUserConfigMaxHookFlash            Unsigned32,
+    KaonUserConfigCurrentCallStatus       INTEGER,
+    KaonUserConfigLastCallStatus          INTEGER
+    }  
+ 
+KaonUserConfigMinHookFlash    OBJECT-TYPE  
+    SYNTAX       Unsigned32 (20..1550)  
+    UNITS        "Milliseconds"  
+    MAX-ACCESS   read-only  
+    STATUS       current  
+    DESCRIPTION  
+        " This is the minimum time a line needs to be on hook for a 
+          valid hook flash. The value of this object MUST be 
+          greater than the value of 
+          pktcNcsEndPntConfigPulseDialMaxBreakTime. The value of 
+          KaonUserConfigMinHookFlash MUST be less than 
+          KaonUserConfigMaxHookFlash. This object MUST only be 
+          set via the configuration file during the provisioning 
+          process. 
+             Furthermore, given the possibility for the 'pulse dial'  
+             and 'hook flash' to overlap, the value of this object 
+MUST                 
+             be greater than the value contained by the MIB Object  
+             pktcNcsEndPntConfigPulseDialMaxMakeTime." 
+    DEFVAL { 300 }  
+    ::= { KaonUserConfigEntry 1 }  
+ 
+KaonUserConfigMaxHookFlash    OBJECT-TYPE  
+    SYNTAX       Unsigned32 (20..1550)  
+    UNITS        "Milliseconds"  
+    MAX-ACCESS   read-only  
+    STATUS       current  
+    DESCRIPTION  
+        " This is the maximum time a line needs to be on hook for a 
+          valid hook flash. The value of 
+          KaonUserConfigMaxHookFlash MUST be greater than 
+          KaonUserConfigMinHookFlash. This object MUST only be 
+
+
+          set via the configuration file during the provisioning 
+          process." 
+    DEFVAL { 800 }  
+    ::= { KaonUserConfigEntry 2 }  
+
+KaonUserConfigCurrentCallStatus    OBJECT-TYPE  
+    SYNTAX       INTEGER { 
+                     idle (0), 
+                     ringing (1),
+                     incoming-established(2),
+                     dialing(3),
+                     ringback(4),
+                     outgoing-established(5),
+                     outgoing-failed(6),
+                     established(7)
+    }   
+    MAX-ACCESS   read-only  
+    STATUS       current  
+    DESCRIPTION  
+        " This shows the current call status." 
+    DEFVAL { idle }  
+    ::= { KaonUserConfigEntry 3 }  
+
+KaonUserConfigLastCallStatus    OBJECT-TYPE  
+    SYNTAX       INTEGER { 
+                   idle (0), 
+                     ringing (1),
+                     incoming-established(2),
+                     dialing(3),
+                     ringback(4),
+                     outgoing-established(5),
+                     outgoing-failed(6),
+                     established(7)
+    }   
+    MAX-ACCESS   read-only  
+    STATUS       current  
+    DESCRIPTION  
+        " This shows the last call status." 
+    DEFVAL { idle }  
+    ::= { KaonUserConfigEntry 4 }
+
+KaonUserConfigDevCallerIdSigProtocol  OBJECT-TYPE  
+    SYNTAX       INTEGER { 
+                         fsk  (1), 
+                         dtmf (2) 
+    } 
+    MAX-ACCESS   read-write  
+    STATUS       current  
+    DESCRIPTION  
+        "This object identifies the subscriber line protocol used 
+         for signaling on-hook caller id information. Different 
+         countries define different caller id signaling protocols to 
+         support caller identification. Frequency shift keying (FSK) 
+         is most commonly used. Dual tone multi-frequency (DTMF) is an alternative." 
+     REFERENCE  
+        "ETSI-EN-300-659-1 Specification" 
+     DEFVAL { fsk } 
+	::= { kmUserConfig 2 } 
+
+END

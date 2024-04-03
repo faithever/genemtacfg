@@ -1,0 +1,857 @@
+-- *************************************************************************
+-- KMCM-RG-MGMT :  Kaonmedia Corporation
+--
+-- Copyright (c) 2016 by Kaonmedia Corporation
+-- All rights reserved.
+-- 
+--**************************************************************************
+--    Filename: KMCM-RG-MGMT.mib
+--    Author:   Yunmi Park
+--    Creation Date: November 02, 2016
+--
+--**************************************************************************
+--    Description:
+--
+--		SMI MIB for cableData branch of Kaonmedia private MIBs
+--		
+--**************************************************************************
+--    Revision History:
+--		
+--**************************************************************************
+KMCM-RG-MGMT DEFINITIONS ::= BEGIN
+IMPORTS
+	NOTIFICATION-TYPE,
+	MODULE-IDENTITY,
+	OBJECT-TYPE,enterprises,
+	Integer32,
+	Unsigned32,
+	Counter32	
+	FROM SNMPv2-SMI         -- RFC 2578
+			sysName
+			FROM SNMPv2-MIB         -- RFC 3418
+			TEXTUAL-CONVENTION,
+			RowStatus,
+			TruthValue,
+			MacAddress,
+			DateAndTime,
+			StorageType
+	FROM SNMPv2-TC          -- RFC 2579
+			OBJECT-GROUP,
+			NOTIFICATION-GROUP,
+			MODULE-COMPLIANCE
+	FROM SNMPv2-CONF        -- RFC 2580
+		SnmpAdminString
+	FROM SNMP-FRAMEWORK-MIB -- RFC 3411
+		SnmpTagList
+	FROM SNMP-TARGET-MIB    -- RFC 3413
+		InetAddressIPv6,
+		InetAddressIPv4
+	FROM INET-ADDRESS-MIB   --  RFC 4001
+		ifIndex,
+		InterfaceIndex,
+		InterfaceIndexOrZero
+	FROM IF-MIB             --  RFC 2863
+		TenthdB,
+		TenthdBmV,
+kmEMTA
+	FROM KMCM-CABLEDATA-KAON-SMI;
+	
+kmRgMgmt MODULE-IDENTITY
+	LAST-UPDATED "201611020000Z"
+	ORGANIZATION "Kaonmedia Co., Ltd."
+	CONTACT-INFO
+	"  R&D Institute/R&D Group
+	Kaonmedia Building, 513-4, Yatap-Dong, 
+	Bundang-Gu, Sungnam-City, Kyonggi-Do, Korea
+
+	Tel : +82 31 724 8500 
+	Fax : +82 31 724 8000  "
+
+	DESCRIPTION
+	"The Structure of Management Information for the Kaonmedia enterprise."
+	REVISION      "201611020000Z"
+	DESCRIPTION
+	"The initial version of this MIB module"
+
+	::= { kmEMTA 4 }    
+
+network			OBJECT IDENTIFIER ::= { kmRgMgmt 1 }
+
+rgBasic			OBJECT IDENTIFIER ::= { network 1 }
+                           
+rgPortFilteringTable		OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgPortFilteringEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 3 }
+
+rgMBPassThroughTable		OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgMBPassThroughEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	 DESCRIPTION
+            "Mac Based PassThrough Function"    
+	::= { network 4 }
+	
+rgPortTriggeringTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgPortTriggeringEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 5 }	 
+	
+rgrtUrlFilteringTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgrtUrlFilteringEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 18 }	 
+
+rgWanIPCfg		OBJECT IDENTIFIER ::= { network 6 }
+	
+rgStaticLanIPTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgStaticLanIPEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 7 }	
+	
+rgMacFilterTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgMacFilterEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 8 }
+	
+rgIpFilterTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgIpFilterEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { network 9 }
+	 
+rgDHCPleaseTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF rgDHCPleaseEntry 
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	DESCRIPTION
+ 	     "Lease Time for the Network Pool"
+  DEFVAL { 86400 }	    
+	::= { network 10 }	 
+	
+rgLanIPCfg	OBJECT IDENTIFIER ::= { network 11 }
+ 
+rgFactoryReset	OBJECT IDENTIFIER ::= { network 12 }
+
+rgEnableSSH	OBJECT IDENTIFIER ::= { network 13 }   
+
+rgEnableTELNET	OBJECT IDENTIFIER ::= { network 14 }
+
+rgEnableWebGUI	OBJECT IDENTIFIER ::= { network 15 }
+
+rgKMgmt	OBJECT IDENTIFIER ::= { network 16 }
+
+WebUIUserModeTable		OBJECT-TYPE
+    SYNTAX      SEQUENCE OF WebUIUserModeEntry 
+    MAX-ACCESS  not-accessible
+    STATUS      current    
+    ::= { network 17 }	
+
+-- The following is just for example...
+rgbDMZhost OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (128)) 
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 1 }
+    
+rgbUPnP OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				enable(1),
+    				disable(2)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 2 }    
+    
+rgbWANBlocking OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				enable(1),
+    				disable(2)		
+    			} 
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 3 }
+    
+rgbPPTPPassThru OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				enable(1),
+    				disable(2)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 4 }
+    
+rgbMulticast OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				enable(1),
+    				disable(2)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 5 }
+    
+rgbModeChange OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				bridge(1),
+    				gateway(2)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 6 }
+    
+rgbModemFirewall OBJECT-TYPE
+    SYNTAX      INTEGER {
+    				off(0),
+       				low(1),
+    				medium(2),
+    				high(3)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgBasic 7 }             
+    
+-------------------------------------------------------------------------------------    
+rgPortFilteringEntry OBJECT-TYPE
+    SYNTAX      rgPortFilteringEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgpfIndex }
+    ::= { rgPortFilteringTable 1 }   
+    
+rgPortFilteringEntry ::= SEQUENCE {
+        rgpfIndex		INTEGER,
+        rgpfStartPort       	INTEGER,    
+        rgpfEndPort       	INTEGER,
+        rgpfProtocol       	INTEGER,  	
+        rgpfEnable		INTEGER,
+        rgpfRowStatus		RowStatus 
+}   
+   
+rgpfIndex		OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgPortFilteringEntry 1 } 		
+         
+rgpfStartPort	OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortFilteringEntry 2 } 
+	
+rgpfEndPort		OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortFilteringEntry 3 }	
+	
+rgpfProtocol	OBJECT-TYPE
+	SYNTAX		INTEGER { both(1), tcp(2), udp(3) }
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortFilteringEntry 4 }
+
+rgpfEnable		OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortFilteringEntry 5 } 	
+	
+rgpfRowStatus	OBJECT-TYPE
+	SYNTAX      RowStatus
+	MAX-ACCESS	read-write
+	STATUS      current
+    DESCRIPTION
+            "The RowStatus interlock for the creation and
+            deletion of a cabhCapPassthroughTable entry.
+            Any writable object in each row can be modified
+            at any time while the row is active(1)."
+	::= { rgPortFilteringEntry 6 } 	
+	
+-------------------------------------------------------------------------------------                              
+rgMBPassThroughEntry OBJECT-TYPE
+    SYNTAX      rgMBPassThroughEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgPassthroughIndex }
+    ::= { rgMBPassThroughTable 1 }   
+    
+rgMBPassThroughEntry ::= SEQUENCE {    
+    rgPassthroughIndex		INTEGER,
+    rgPassthroughMacAddr	OCTET STRING,        
+    rgPassthroughRowStatus	RowStatus
+}
+
+rgPassthroughIndex		OBJECT-TYPE
+    SYNTAX		INTEGER
+    MAX-ACCESS	read-only
+    STATUS      current
+    ::= { rgMBPassThroughEntry 1 }
+	
+rgPassthroughMacAddr OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (30))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgMBPassThroughEntry 2 }   
+    
+rgPassthroughRowStatus OBJECT-TYPE
+	SYNTAX  RowStatus
+	MAX-ACCESS  read-create
+	STATUS      current
+    DESCRIPTION
+            "The RowStatus interlock for the creation and
+            deletion of a cabhCapPassthroughTable entry.
+            Any writable object in each row can be modified
+            at any time while the row is active(1)."
+    ::= { rgMBPassThroughEntry 3 }
+
+-------------------------------------------------------------------------------------                              
+rgPortTriggeringEntry OBJECT-TYPE
+    SYNTAX      rgPortTriggeringEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgptIndex }
+    ::= { rgPortTriggeringTable 1 }   
+    
+rgPortTriggeringEntry ::= SEQUENCE {
+        rgptIndex		INTEGER,
+        rgptSourceStartPort     INTEGER,   
+        rgptSourceEndPort       INTEGER,
+        rgptDestStartPort       INTEGER, 
+        rgptDestEndPort       	INTEGER,
+        rgptProtocol       	INTEGER,  	
+        rgptDescription		OCTET STRING,  
+        rgptEnable		INTEGER,  
+        rgptRowStatus	        RowStatus
+}    
+
+rgptIndex			OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgPortTriggeringEntry 1 } 		
+         
+rgptSourceStartPort		OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 2 } 
+	
+rgptSourceEndPort		OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 3 }	 
+	
+rgptDestStartPort		OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 4 } 
+	
+rgptDestEndPort			OBJECT-TYPE
+	SYNTAX		INTEGER (0..65535)
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 5 }
+	
+rgptProtocol		OBJECT-TYPE
+	SYNTAX		INTEGER { both(1), tcp(2), udp(3) }
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 6 }	 	
+
+rgptDescription		OBJECT-TYPE
+	SYNTAX      OCTET STRING (SIZE (128))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 7 } 
+	
+rgptEnable		OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 8 }	
+	
+rgptRowStatus		OBJECT-TYPE
+	SYNTAX		RowStatus
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgPortTriggeringEntry 9 } 
+
+
+-------------------------------------------------------------------------------------                              
+rgrtUrlFilteringEntry OBJECT-TYPE
+    SYNTAX      rgrtUrlFilteringEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgrtIndex }
+    ::= { rgrtUrlFilteringTable 1 }   
+    
+rgrtUrlFilteringEntry ::= SEQUENCE {
+    rgrtIndex				INTEGER,
+    rgrtUrlFilteringDescription		OCTET STRING,  
+    rgrtUrlFilteringRowStatus	        RowStatus
+}    
+
+rgrtIndex			OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgrtUrlFilteringEntry 1 } 		
+         
+rgrtUrlFilteringDescription		OBJECT-TYPE
+	SYNTAX      OCTET STRING (SIZE (128))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgrtUrlFilteringEntry 2 } 
+	
+rgrtUrlFilteringRowStatus		OBJECT-TYPE
+	SYNTAX		RowStatus
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgrtUrlFilteringEntry 3 } 
+
+------------------------------------------------------------------------------------- 
+rgwcMode OBJECT-TYPE
+    SYNTAX      INTEGER {
+       				dhcp(1),
+    				static(2)		
+    			}
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 1 }
+    
+rgwcIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 2 }    
+    
+rgwcNetmask OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 3 }
+    
+rgwcGatewayIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 4 }
+    
+rgwcPrimaryDNS OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (128))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 5 }
+    
+rgwcSecondaryDNS OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (128))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 6 }
+    
+rgwcTertiaryDNS OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (128))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 7 }   
+   
+rglcCommit OBJECT-TYPE
+    SYNTAX      INTEGER {
+    		commit(1)
+    }
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgWanIPCfg 8 }
+------------------------------------------------------------------------------------- 
+rgStaticLanIPEntry OBJECT-TYPE
+    SYNTAX      rgStaticLanIPEntry
+    MAX-ACCESS  read-only
+    STATUS      current
+    INDEX      { rgslIndex }
+    ::= { rgStaticLanIPTable 1 }   
+    
+rgStaticLanIPEntry ::= SEQUENCE {  
+	rgslIndex	INTEGER,
+    rgslMACAddress	OCTET STRING,   
+    rgslIPAddress	OCTET STRING     
+}    
+               
+rgslIndex		OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgStaticLanIPEntry 1 } 
+	
+rgslMACAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (30))
+    MAX-ACCESS    read-only
+    STATUS        current
+    ::= { rgStaticLanIPEntry 2 }
+    
+rgslIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-only
+    STATUS        current
+    ::= { rgStaticLanIPEntry 3 }     
+    
+-------------------------------------------------------------------------------------   
+rgMacFilterEntry OBJECT-TYPE
+    SYNTAX      rgMacFilterEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgmfIndex }
+    ::= { rgMacFilterTable 1 }   
+    
+rgMacFilterEntry ::= SEQUENCE {  
+	rgmfIndex	INTEGER,
+    rgmfMACAddress	OCTET STRING,  
+    rgmfRowStatus	RowStatus
+}    
+    
+rgmfIndex		OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      	current
+	::= { rgMacFilterEntry 1 }
+	
+rgmfMACAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (30))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgMacFilterEntry 2 }    
+                                                   
+rgmfRowStatus	OBJECT-TYPE
+	SYNTAX		RowStatus
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgMacFilterEntry 3 } 
+
+------------------------------------------------------------------------------------- 
+rgIpFilterEntry OBJECT-TYPE
+    SYNTAX      rgIpFilterEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgifIndex }
+    ::= { rgIpFilterTable 1 }   
+    
+rgIpFilterEntry ::= SEQUENCE { 
+    rgifIndex		INTEGER,
+    rgifStartIPAddress	OCTET STRING,    
+    rgifEndIPAddress	OCTET STRING,   
+    rgifEnable		INTEGER,
+    rgifRowStatus	INTEGER
+} 
+  
+rgifIndex		OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgIpFilterEntry 1 }
+	
+rgifStartIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgIpFilterEntry 2 }
+    
+rgifEndIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgIpFilterEntry 3 }
+    
+rgifEnable		OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgIpFilterEntry 4 } 	
+	
+rgifRowStatus	OBJECT-TYPE
+	SYNTAX		RowStatus
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { rgIpFilterEntry 5 } 
+------------------------------------------------------------------------------------- 
+rgDHCPleaseEntry OBJECT-TYPE
+    SYNTAX      rgDHCPleaseEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    INDEX      { rgdlIndex }
+    ::= { rgDHCPleaseTable 1 }   
+    
+rgDHCPleaseEntry ::= SEQUENCE {     
+	rgdlIndex		INTEGER,
+	rgdlLANIPAddress	OCTET STRING,  
+	rgdlRemove		INTEGER
+}
+
+rgdlIndex		OBJECT-TYPE
+	SYNTAX		INTEGER 
+	MAX-ACCESS	read-only
+	STATUS      current
+	::= { rgDHCPleaseEntry 1 }
+	
+rgdlLANIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-only
+    STATUS        current
+    ::= { rgDHCPleaseEntry 2 }     
+ 
+rgdlRemove OBJECT-TYPE
+    SYNTAX      INTEGER { remove(6) }
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgDHCPleaseEntry 3 }     
+    
+-------------------------------------------------------------------------------------    
+rglcDhcpMode OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS    read-write
+    STATUS        current
+    DESCRIPTION
+            "DHCP Mode"
+    DEFVAL { 1 }
+    ::= { rgLanIPCfg 1 } 
+
+rglcStartIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 2 }
+    
+rglcEndIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 3 }    
+    
+rglcNetworkIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 4 }
+    
+rglcNetmask OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 5 }
+    
+rglcGatewayIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 6 }
+    
+rglcDNSIPAddress OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (16))
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 7 }
+    
+rglcLeaseTime OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS    read-write
+    STATUS        current
+    DESCRIPTION
+            "Lease Time for the Network Pool"
+    DEFVAL { 86400 }
+    ::= { rgLanIPCfg 8 } 
+
+rglcCommit OBJECT-TYPE
+    SYNTAX      INTEGER {
+    		commit(1)
+    }
+    MAX-ACCESS    read-write
+    STATUS        current
+    ::= { rgLanIPCfg 9 }
+-------------------------------------------------------------------------------------
+rgfcReset 	  OBJECT-TYPE
+	SYNTAX      INTEGER { reset(1) }
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgFactoryReset 1 } 
+
+rgReset 	  OBJECT-TYPE
+	SYNTAX      INTEGER { reset(1) }
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgFactoryReset 2 } 
+
+-------------------------------------------------------------------------------------
+rgesEnable 	  OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgEnableSSH 1 }
+
+-------------------------------------------------------------------------------------
+rgetEnable 	  OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgEnableTELNET 1 }
+
+-------------------------------------------------------------------------------------
+rgewEnable 	  OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgEnableWebGUI 1 }
+	
+rgewUserName   OBJECT-TYPE
+	SYNTAX      OCTET STRING (SIZE (128))
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgEnableWebGUI 2 }
+	
+rgewPassword   OBJECT-TYPE
+	SYNTAX      OCTET STRING (SIZE (128))
+	MAX-ACCESS    read-write
+    STATUS        current
+	::= { rgEnableWebGUI 3 }
+	
+-------------------------------------------------------------------------------------
+rgKOperMode    OBJECT-TYPE
+	SYNTAX      INTEGER {
+		disabled(1),
+		residentialGateway(2),
+		cableHome10(3),
+		cableHome11(4)
+	}
+	MAX-ACCESS    read-write
+	STATUS      deprecated
+	DESCRIPTION
+		"Sets the operational mode of the device with regard to residential
+		gateway behavior."
+	::= { rgKMgmt 1 }
+
+rgKRipEnabled    OBJECT-TYPE
+	SYNTAX      TruthValue
+	MAX-ACCESS    read-write
+	STATUS        current
+	DESCRIPTION
+	    "Enables or disable router information protocol support in the device."
+	::= { rgKMgmt 2 }
+
+rgKVpnEnabled    OBJECT-TYPE
+	SYNTAX      TruthValue
+	MAX-ACCESS    read-write
+	STATUS        current
+	DESCRIPTION
+		"Enables or disable virtual private network support in the device."
+	::= { rgKMgmt 3 }
+
+rgKeRouterIpProvMode    OBJECT-TYPE
+	SYNTAX      INTEGER {
+		disabled(1),
+		ipv4(2),
+		ipv6(3),
+		dual(4),
+		ipv4RG(5)
+	}
+	MAX-ACCESS    read-write
+	STATUS        current
+	DESCRIPTION
+		"Toggles ip provisioning modes for eRouter.
+		Note, override modes are obsolete."
+	::= { rgKMgmt 4 }
+
+rgKVlanStrip    OBJECT-TYPE
+	SYNTAX		INTEGER { enable(1), disable(2) }
+	MAX-ACCESS    read-write
+	STATUS        current
+	::= { rgKMgmt 5 }
+
+-------------------------------------------------------------------------------------
+rgKVlanApplySettings    OBJECT-TYPE
+	SYNTAX      TruthValue
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION
+		"If set to true(1), the current configuration set in this MIB
+		will be flushed to non-volatile storage, and the VLAN Manager will
+		re-initialize the networks using this configuration.
+
+		Unless this object is explicitly set to true(1), any settings made via
+		other objects in this MIB will be lost if a reboot occurs.
+
+		Always returns false(2) when read."
+	REFERENCE
+		"CableHome 1.1 Specification,Packet Handling & Address
+		Translation section."
+	::= { rgKMgmt 6 }
+
+-------------------------------------------------------------------------------------
+WebUIUserModeEntry OBJECT-TYPE
+	SYNTAX      WebUIUserModeEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	INDEX      { WebUIUserModeIndex }
+	::= { WebUIUserModeTable 1 }
+
+WebUIUserModeEntry ::= SEQUENCE {
+	WebUIUserModeIndex	INTEGER,
+	WebUIUserModeRowStatus RowStatus,
+	WebUIUserModeControlWebString	OCTET STRING (SIZE(0..8192)),
+	WebUIUserModeAction	INTEGER { enable(1), disable(2) }
+}
+
+-------------------------------------------------------------------------------------
+--1.3.6.1.4.1.27069.1.3.4.1.17.1.1
+WebUIUserModeIndex 	  OBJECT-TYPE
+	SYNTAX		INTEGER 
+	MAX-ACCESS	not-accessible
+	STATUS      current
+	::= { WebUIUserModeEntry 1 } 
+
+--1.3.6.1.4.1.27069.1.3.4.1.17.1.2
+WebUIUserModeRowStatus 	  OBJECT-TYPE
+	SYNTAX		RowStatus
+	MAX-ACCESS	read-create
+	STATUS		current
+	DESCRIPTION 
+  "This OID uses six main statuses:
+        active(1)         is in use and available in WebUIUserModeTable
+        notinService(2)   it is present but not yet created
+        notReady(3)       it is present but missing info
+        createAndGo(4)    create stuff in WebUIUserModeTable.  Row will be
+                          added to this table if necessary.
+        createAndWait(5)  add WebUIUserMode row to this table
+        destroy(6)        will remove the stuff row
+        This OID is used to add/remove rows for WebUIUserMode creation.  
+        It can also be used to determine if a WebUIUserMode has been 
+        created successfully."
+	::= { WebUIUserModeEntry 2 }
+
+--1.3.6.1.4.1.27069.1.3.4.1.17.1.3
+WebUIUserModeControlWebString OBJECT-TYPE
+	SYNTAX		OCTET STRING (SIZE(0..8192))
+	MAX-ACCESS	read-create
+	STATUS		current
+	DESCRIPTION 
+	"The WebUIUserModeControlWebString interlock for the creation and
+	deletion of a WebUIUserModeAction entry.
+	Any writable object in each row can be modified with [DISABLE:cbIpsecPassThrough;] format
+	at any time while the row is active(1)."
+	::= { WebUIUserModeEntry 3 }
+
+--1.3.6.1.4.1.27069.1.3.4.1.17.1.4
+WebUIUserModeAction 	  OBJECT-TYPE
+	SYNTAX      INTEGER { enable(1), disable(2) }
+	MAX-ACCESS    read-create
+	STATUS        current
+	DESCRIPTION
+	"Enables/disables access with user Read-Only Mode
+	The HTTP server runs on the IP stack with the IP address specified in other settings.
+	In order for a user to gain access, he/she must set Kaon's Private Mibs WebUIUserMode.."	
+	::= { WebUIUserModeEntry 4 }
+END

@@ -1,0 +1,366 @@
+-- *************************************************************************
+-- KMCM-CM-MGMT :  Kaonmedia Corporation
+--
+-- Copyright (c) 2016 by Kaonmedia Corporation
+-- All rights reserved.
+-- 
+--**************************************************************************
+--    Filename: KMCM-CM-MGMT.mib
+--    Author:   Yunmi Park
+--    Creation Date: April 16, 2019
+--
+--**************************************************************************
+--    Description:
+--
+--		SMI MIB for cableData branch of Kaonmedia private MIBs
+--		
+--**************************************************************************
+--    Revision History:
+--		
+--**************************************************************************
+
+KMCM-CM-MGMT DEFINITIONS ::= BEGIN
+IMPORTS
+        MODULE-IDENTITY, 
+        OBJECT-TYPE,enterprises, 
+        Integer32,
+        IpAddress,
+        Unsigned32,
+        Counter32,
+        Integer32,
+        zeroDotZero,
+                FROM SNMPv2-SMI
+        DisplayString
+    		 FROM SNMPv2-TC
+        SnmpAdminString
+                FROM SNMP-FRAMEWORK-MIB   -- RFC 3411
+        MacAddress
+				FROM SNMPv2-TC                
+        kmEMTA
+        		FROM KMCM-CABLEDATA-KAON-SMI;
+                
+
+kmCableModemMgmt MODULE-IDENTITY
+    LAST-UPDATED "201904160000Z"
+    ORGANIZATION "Kaonmedia Co., Ltd."
+    CONTACT-INFO
+        "  R&D Institute/R&D Group
+            Kaonmedia Building, 513-4, Yatap-Dong, 
+            Bundang-Gu, Sungnam-City, Kyonggi-Do, Korea
+		
+	     		Tel : +82 31 724 8500 
+	     		Fax : +82 31 724 8000  "
+
+    DESCRIPTION
+        "The Structure of Management Information for the Kaonmedia enterprise."
+    REVISION      "201904160000Z"
+    DESCRIPTION
+        "The initial version of this MIB module"
+        
+        ::= { kmEMTA 1 }   
+        
+--cableModem              OBJECT IDENTIFIER ::= { kmCableModemMgmt 1 }
+production              OBJECT IDENTIFIER ::= { kmCableModemMgmt 777 }    
+
+productionSetting OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS       read-write
+    STATUS        current
+    DESCRIPTION    
+        "Set as production setting"
+    ::= { production 1 }            
+    
+
+kmCmMgmt              OBJECT IDENTIFIER ::= { kmCableModemMgmt 4000 }
+
+kmCmDisableCfgFileCvcChecking OBJECT-TYPE
+    SYNTAX INTEGER {
+          enable(0),
+          disable(1)
+	}
+    MAX-ACCESS 	  read-write
+    STATUS        current
+    DESCRIPTION	
+        "
+          When SW download and update occurs in CM normally the CVC is included in the CFG file provided to the CM. We may
+	  not control the CFG file we are getting, but may need to update the CM SW. This SNMP object allows us to configure a
+	  non-vol memory object that persists through reboots that tell the CM to skip the check for CVC in CFG file when validating
+	  a SW file after download. This is related to the docsDevSW* MIBs.
+        "
+    ::= { kmCmMgmt 1 }
+	
+kmCmIgnoreSnmpCpeAccessInCfg OBJECT-TYPE
+    SYNTAX INTEGER {
+          enable(0),
+          disable(1)
+	}
+    MAX-ACCESS 	  read-write
+    STATUS        current
+    DESCRIPTION	
+        "
+		This SNMP object allows us to configure a non-vol memory parameter that persists through reboots to either honor the
+		TLV 55 in the CFG file and allow or restrict CPE side access to SNMP, or configure the CM to ignore the TLV-55 in the CFG
+		file and always allow SNMP access to the CPE side interface. This allows our 7445 to manage the CM via SNMP regardless
+		of what the operator sends to our CM.
+        "
+    ::= { kmCmMgmt 2 }
+
+kmCmDisableCmDsScanning OBJECT-TYPE
+    SYNTAX INTEGER {
+          enable(0),
+          disable(1)
+	}
+    MAX-ACCESS 	  read-write
+    STATUS        current
+    DESCRIPTION	
+        "
+		The SNMP object allows us to configure a non-vol memory parameter that persists through reboots to disable CM
+		downstream scanning when we don't plan to use the CM i.e. Ethernet or MoCA installations.
+        "
+    ::= { kmCmMgmt 3 }
+
+kmCmDownstreamStartSearchFrequency OBJECT-TYPE
+    SYNTAX           Integer32
+    MAX-ACCESS       read-write
+    STATUS           current
+    DESCRIPTION    
+        "
+          Causes the CM to move to the Ds Freq specified.  If the CM fails to lock at the
+          specified frequency, then it will continue scanning.  When it locks on a valid
+          downstream, it will then range, perform IP initialization, and register.  The
+          value can be in units of Hz or MHz (if the value is less than 10,000, then it is
+          assumed to be MHz)
+        "
+    ::= { kmCmMgmt 4 }
+
+kmCmDisableAutoDiplexerSwitching OBJECT-TYPE
+    SYNTAX INTEGER {
+          enable(0),
+          disable(1)
+	}
+    MAX-ACCESS 	  read-write
+    STATUS        current
+    DESCRIPTION	
+        "
+		This object enables or disables that support of automatic diplexer switching (MULPI-v3.1-N-17.1708-1)
+		By default, value is disabled.
+        "
+    ::= { kmCmMgmt 5 }
+
+kmCmMtaControl OBJECT-TYPE
+    SYNTAX INTEGER {
+          disable(0),
+          enable(1)
+  }
+    MAX-ACCESS     read-write
+    STATUS        current
+    DESCRIPTION  
+        "
+          Control embedded MTA. Entirely disable/enable the MTA part.
+        "
+    ::= { kmCmMgmt 6 }
+
+kmCmRemoteAccessTypeControl OBJECT-TYPE
+    SYNTAX INTEGER {
+          permanent(1),
+          singleSessioin(2),
+          disabled(3)
+  }
+    MAX-ACCESS     read-write
+    STATUS        current
+    DESCRIPTION  
+        "
+          Control remote access type for Telnet & SSH.
+          Default value is 1.
+        "
+    ::= { kmCmMgmt 7 }
+
+kmCmDhcpControl OBJECT-TYPE
+    SYNTAX INTEGER {
+          disable(0),
+          enable(1)
+	}
+    MAX-ACCESS 	  read-write
+    STATUS        current
+    DESCRIPTION	
+        "
+		This SNMP object provides access to a non-vol memory parameter that persists through reboots that sets the state of the
+		LAN side DHCP server in the eRouter/Residential Gateway portion of the CM/RG to enabled or disabled.
+        "
+    ::= { kmCmMgmt 10 }
+
+kmCmTelnetPortNumberControl OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS       read-write
+    STATUS        current
+    DESCRIPTION    
+        "Set telnet Port Number"
+    ::= { kmCmMgmt 11 } 
+	
+kmCmSshPortNumberControl OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS       read-write
+    STATUS        current
+    DESCRIPTION    
+        "Set ssh Port Number"
+    ::= { kmCmMgmt 12 }		
+
+kmCmOffline         OBJECT IDENTIFIER ::= { kmCmMgmt 100 }
+kmCmOfflineMgmtBase OBJECT IDENTIFIER ::= { kmCmOffline 1 } 
+
+kmCmTotalOfflineTime OBJECT-TYPE
+    SYNTAX       Integer32
+    MAX-ACCESS     read-only
+    STATUS        current
+    DESCRIPTION  
+        "This object shows the total aggregated offline time of CM."
+    ::= { kmCmOfflineMgmtBase 1 }    
+    
+kmCmLastSentOfflineTime OBJECT-TYPE
+    SYNTAX       Integer32
+    MAX-ACCESS     read-only
+    STATUS        current
+    DESCRIPTION  
+        "This object shows the offline time which sent updated value after sending syslog."
+    ::= { kmCmOfflineMgmtBase 2 }
+
+kmCmCurrentOfflineTime OBJECT-TYPE
+    SYNTAX       Integer32
+    MAX-ACCESS     read-only
+    STATUS        current
+    DESCRIPTION  
+        "This object shows the current offline time."
+    ::= { kmCmOfflineMgmtBase 3 }
+
+    
+kmCmOfflineTimeClear OBJECT-TYPE
+    SYNTAX INTEGER {
+          false(0),
+          true(1)
+  }
+    MAX-ACCESS     read-write
+    STATUS        current
+    DESCRIPTION  
+        "This object clear values related offline time."
+    ::= { kmCmOfflineMgmtBase 4 }
+
+kmCmCpeTable OBJECT-TYPE
+     SYNTAX      SEQUENCE OF kmCmCpeEntry
+     MAX-ACCESS  not-accessible
+     STATUS      current
+     DESCRIPTION
+         "This table is CPE table for CM."
+     ::= { kmCmMgmt 200 }
+
+kmCmCpeEntry OBJECT-TYPE
+     SYNTAX      kmCmCpeEntry
+     MAX-ACCESS  not-accessible
+     STATUS      current
+	 DESCRIPTION
+        "This table is CPE table for CM."
+	 INDEX		{ kmCmCpeIndex }
+     ::= { kmCmCpeTable 1 }
+	 
+
+kmCmCpeEntry ::= 
+	SEQUENCE {
+		kmCmCpeIndex              Integer32,
+        kmCmCpeMacAddress         MacAddress
+    }
+	
+kmCmCpeIndex OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Identifies the instance of CM CPE"
+    ::= { kmCmCpeEntry 1 }
+	
+kmCmCpeMacAddress OBJECT-TYPE
+     SYNTAX      MacAddress
+     MAX-ACCESS  read-only
+     STATUS      current
+     DESCRIPTION
+         "Mac Address of CM Cpe"
+     ::= { kmCmCpeEntry 2 }
+     
+     
+kmCmMyVendorInfoTable OBJECT-TYPE
+     SYNTAX      SEQUENCE OF kmCmMyVendorInfoEntry
+     MAX-ACCESS  not-accessible
+     STATUS      current
+     DESCRIPTION
+         "This table is my vendor info."
+     ::= { kmCmMgmt 300 }
+
+kmCmMyVendorInfoEntry OBJECT-TYPE
+     SYNTAX      kmCmMyVendorInfoEntry
+     MAX-ACCESS  not-accessible
+     STATUS      current
+	 DESCRIPTION
+        "This table is CPE table for CM."
+	 INDEX		{ kmCmMyVendorIndex }
+     ::= { kmCmMyVendorInfoTable 1 }
+	 
+
+kmCmMyVendorInfoEntry ::= 
+	SEQUENCE {
+		kmCmMyVendorIndex              Integer32,
+        kmCmMyVendorCmSwModel         SnmpAdminString,
+        kmCmMyVendorCmSwServer		IpAddress,
+        kmCmMyVendorCmSwFilename	SnmpAdminString
+    }
+	
+kmCmMyVendorIndex OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Identifies the instance of MyVendorInfo"
+    ::= { kmCmMyVendorInfoEntry 1 }
+	
+kmCmMyVendorCmSwModel OBJECT-TYPE
+    SYNTAX      DisplayString (SIZE (0..255))
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION
+            "An administratively-assigned name for this managed
+            node.  By convention, this is the node's fully-qualified
+            domain name.  If the name is unknown, the value is
+            the zero-length string."
+     ::= { kmCmMyVendorInfoEntry 2 }
+     
+kmCmMyVendorCmSwServer OBJECT-TYPE
+    SYNTAX      IpAddress
+        MAX-ACCESS  read-write
+        STATUS      deprecated
+        DESCRIPTION
+            "The address of the TFTP server used for software
+             upgrades.  If the TFTP server is unknown or is a
+             non-IPv4 address, return 0.0.0.0.
+
+             This object is deprecated.  See docsDevSwServerAddress
+             for its replacement.  This object will have its value
+             modified, given a valid SET to docsDevSwServerAddress."
+    ::= { kmCmMyVendorInfoEntry 3 }
+	
+kmCmMyVendorCmSwFilename OBJECT-TYPE
+     SYNTAX      SnmpAdminString (SIZE (0..128))
+        MAX-ACCESS  read-write
+        STATUS      current
+        DESCRIPTION
+            "The filename of the software image to be downloaded via
+             TFTP, or the abs_path (as defined in RFC 2616) of the
+             software image to be downloaded via HTTP.
+
+             Unless set via SNMP, this is the filename or abs_path
+             specified by the provisioning server during the boot
+             process that corresponds to the software version that
+             is desired for this device.
+
+             If unknown, the value of this object is the zero-length
+             string."    
+     ::= { kmCmMyVendorInfoEntry 4 }
+     
+
+END

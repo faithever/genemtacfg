@@ -1,0 +1,50 @@
+-- *************************************************************************
+-- KMCM-CABLEDATA-SMI :  Kaonmedia Corporation
+--
+-- Copyright (c) 2010 by Kaonmedia Corporation
+-- All rights reserved.
+-- 
+--**************************************************************************
+--    Filename: kmcm-cabledata-kaon-smi.mib
+--    Author:   Seung-Hee Lee
+--    Creation Date: Apr 28, 2010
+--
+--**************************************************************************
+--    Description:
+--
+--		SMI MIB for cableData branch of Kaonmedia private MIBs
+--		
+--**************************************************************************
+--    Revision History:
+--    
+--**************************************************************************
+
+KMCM-CABLEDATA-KAON-SMI DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY,
+    OBJECT-IDENTITY,
+    --OBJECT IDENTIFIER,
+    enterprises
+        FROM SNMPv2-SMI;
+        
+kaonmedia MODULE-IDENTITY
+    LAST-UPDATED "201004280000Z"
+    ORGANIZATION "Kaonmedia Co., Ltd."
+    CONTACT-INFO
+        "  R&D Institute/R&D Group
+            Kaonmedia Building, 513-4, Yatap-Dong, 
+            Bundang-Gu, Sungnam-City, Kyonggi-Do, Korea
+		
+	     		Tel : +82 31 724 8500 
+	     		Fax : +82 31 724 8000  "
+    DESCRIPTION
+        "The Structure of Management Information for the Kaonmedia enterprise."
+    ::= { enterprises 27069 }	-- assigned by IANA(http://www.iana.org/assignments/enterprise-numbers)
+
+-- 1.3.6.1.4.1.27069.1        
+kaonmediaProducts   OBJECT IDENTIFIER ::= { kaonmedia 1 }
+kmEMTA              OBJECT IDENTIFIER ::= { kaonmediaProducts 3 }
+
+END
+

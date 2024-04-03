@@ -1,0 +1,161 @@
+-- *************************************************************************
+-- KMCM-WIFI-MGMT :  Kaonmedia Corporation
+--
+-- Copyright (c) 2016 by Kaonmedia Corporation
+-- All rights reserved.
+-- 
+--**************************************************************************
+--    Filename: KMCM-WIFI-MGMT.mib
+--    Author:   Yunmi Park
+--    Creation Date: November 02, 2016
+--
+--**************************************************************************
+--    Description:
+--
+--		SMI MIB for cableData branch of Kaonmedia private MIBs
+--		
+--**************************************************************************
+--    Revision History:
+--		
+--**************************************************************************
+
+KMCM-WIFI-MGMT DEFINITIONS ::= BEGIN
+IMPORTS
+        MODULE-IDENTITY, 
+        OBJECT-TYPE,enterprises, 
+        Integer32
+                FROM SNMPv2-SMI
+        kmEMTA
+        		FROM KMCM-CABLEDATA-KAON-SMI;
+
+kmWifiMgmt MODULE-IDENTITY
+    LAST-UPDATED "201611020000Z"
+    ORGANIZATION "Kaonmedia Co., Ltd."
+    CONTACT-INFO
+        "  R&D Institute/R&D Group
+            Kaonmedia Building, 513-4, Yatap-Dong, 
+            Bundang-Gu, Sungnam-City, Kyonggi-Do, Korea
+		
+	     		Tel : +82 31 724 8500 
+	     		Fax : +82 31 724 8000  "
+
+    DESCRIPTION
+        "The Structure of Management Information for the Kaonmedia enterprise."
+    REVISION      "201611020000Z"
+    DESCRIPTION
+        "The initial version of this MIB module"
+        
+        ::= { kmEMTA 3 }       
+        
+wifi		OBJECT IDENTIFIER ::= { kmWifiMgmt 1 }  
+wlBasic		OBJECT IDENTIFIER ::= { wifi 1 }
+
+wlSsidTable	OBJECT-TYPE
+	SYNTAX      SEQUENCE OF wlSsidEntry  
+	MAX-ACCESS  not-accessible
+	STATUS      current    
+	::= { wifi 2 }       
+	
+wlApply           OBJECT-TYPE
+    SYNTAX      INTEGER {
+    				apply(1)
+    			}
+    MAX-ACCESS	read-write  
+    STATUS		current
+	::= { wifi 3 }
+
+-- The following is just for example...
+wlEnableRadio OBJECT-TYPE
+    SYNTAX      INTEGER {
+    				disable(1),
+    				enable(3)	
+    			}
+    MAX-ACCESS	read-write
+    STATUS      current
+    DESCRIPTION    
+        "Wireless radio on/off"
+    ::= { wlBasic 1 }
+
+wlChannel OBJECT-TYPE
+    SYNTAX      INTEGER (0..11)
+    MAX-ACCESS	read-write
+    STATUS      current
+    DESCRIPTION    
+        "Wireless Channel, 0:Auto, range:1~11"
+    ::= { wlBasic 2 }
+
+wlSsidEntry OBJECT-TYPE
+    SYNTAX      wlSsidEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+            "The addressing information for one of this entity's IP
+            addresses."
+    INDEX      { wlIndex }
+    ::= { wlSsidTable 1 }
+
+wlSsidEntry ::= SEQUENCE {        
+		wlIndex					INTEGER,
+        wlSSID					OCTET STRING,
+        wlEncMethod       		INTEGER,
+        wlWEP64Key       		OCTET STRING,
+        wlWEP128Key     		OCTET STRING,        
+        wlWPAKey				OCTET STRING,  	
+        wlWPAEncMethod	    	INTEGER 
+        }     
+        
+wlIndex	OBJECT-TYPE
+	SYNTAX		INTEGER
+	MAX-ACCESS	read-only
+	STATUS      current
+    ::= { wlSsidEntry 1 }
+    
+wlSSID OBJECT-TYPE
+	SYNTAX		OCTET STRING (SIZE (32))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 2 }		
+
+wlEncMethod OBJECT-TYPE
+	SYNTAX		INTEGER {
+					Open(0),
+					WEP(1),
+					WPAPSK(2),
+					WPA2PSK(3),
+					WPAEnterprise(4),
+					WPA2Enterprise(5),
+					RadiusWEP(6),
+					WPAWPA2PSK(7)
+				}
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 3 }
+  
+wlWEP64Key OBJECT-TYPE
+	SYNTAX		OCTET STRING (SIZE (64))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 4 }
+    
+wlWEP128Key OBJECT-TYPE
+	SYNTAX		OCTET STRING (SIZE (128))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 5 }   
+	
+wlWPAKey OBJECT-TYPE
+	SYNTAX		OCTET STRING (SIZE (64))
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 6 }	
+
+wlWPAEncMethod OBJECT-TYPE
+	SYNTAX		INTEGER { 
+					 aes(2),
+					 tkipaes(3)
+				}
+	MAX-ACCESS	read-write
+	STATUS      current
+	::= { wlSsidEntry 7 }
+		
+END
